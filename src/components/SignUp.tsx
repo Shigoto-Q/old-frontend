@@ -15,7 +15,7 @@ type StateProps = {
   email: string,
   country: string,
   password: string,
-  re_passowrd: string,
+  re_password: string,
   street_address: string,
   company: string,
   city: string,
@@ -38,7 +38,7 @@ class SignUp extends Component<SignUpProps, StateProps> {
       email: "",
       country: "",
       password: "",
-      re_passowrd: "",
+      re_password: "",
       street_address: "",
       company: "",
       city: "",
@@ -48,7 +48,7 @@ class SignUp extends Component<SignUpProps, StateProps> {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
-  componentWillMout() {
+  componentWillMount() {
     if (this.props.isAuthenticated)
       return <Redirect to="/dashboard" />
 

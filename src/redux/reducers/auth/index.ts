@@ -8,15 +8,14 @@ import {
   AUTHENTICATED_SUCCESS,
   USER_LOADED_SUCCESS,
   USER_LOADED_FAIL,
-} from "../../types/auth/index";
+} from "../../types/auth";
 import { toast, Slide } from "react-toastify";
-import api from "../../../api/"
 const isUserAuth = localStorage.getItem("userData")
 
 const initialState = {
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
-  isAuthenticated: isUserAuth ? true : false,
+  isAuthenticated: !!isUserAuth,
   user: isUserAuth,
 };
 
@@ -86,6 +85,17 @@ const reducers = (state = initialState, action: any) => {
         isAuthenticated: false,
       }
     case LOGIN_FAIL:
+      toast("Log in failed", {
+        position: "bottom-center",
+        transition: Slide,
+        hideProgressBar: false,
+        autoClose: 2000,
+        closeOnClick: true,
+        progress: undefined,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+        draggable: true,
+      });
       return {
         ...state,
         loginFail: true,

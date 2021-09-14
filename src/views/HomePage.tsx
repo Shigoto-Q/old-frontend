@@ -10,10 +10,6 @@ const homeTransition = {
     duration: 0.8
 }
 class Home extends Component {
-    constructor(props: any) {
-        super(props);
-    }
-
     render() {
         return (
             <div>

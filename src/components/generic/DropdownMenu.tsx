@@ -1,5 +1,5 @@
 import {Listbox, Transition} from "@headlessui/react";
-import {Calendar, Check, Icon, Menu} from "react-feather";
+import { Check, Menu} from "react-feather";
 import React, {Fragment} from "react";
 
 type DropdownMenuProps = {

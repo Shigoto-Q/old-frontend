@@ -1,6 +1,5 @@
-import { Fragment, useState } from "react";
-import { Listbox, Transition } from "@headlessui/react";
-import { Check, Menu, Sunrise } from "react-feather";
+import { useState } from "react";
+import {  Sunrise } from "react-feather";
 import { connect } from "react-redux";
 import { createSolar } from "../redux/actions/schedule/";
 import DropdownMenu from "./generic/DropdownMenu";
@@ -56,9 +55,6 @@ const solar = [
   },
 ];
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
 
 const SolarSchedule = ({ createSolar }: SolarProps) => {
   const [selected, setSelected] = useState(solar[0]);

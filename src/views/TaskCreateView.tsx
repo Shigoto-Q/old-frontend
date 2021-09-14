@@ -1,13 +1,9 @@
-import React, {Fragment, useEffect, useState} from 'react'
-import {Listbox, Switch, Transition} from '@headlessui/react'
-import { Check, Menu, Calendar } from 'react-feather'
+import React, {useState} from 'react'
+import {Switch} from '@headlessui/react'
 import DropdownMenu from "../components/generic/DropdownMenu";
 import {connect} from "react-redux";
 import {checkAuthenticated, load_user} from "../redux/actions/auth";
 import {createTask} from "../redux/actions/task";
-import {ghapi} from "../api";
-
-
 
 
 type TaskProps = {
@@ -104,12 +100,6 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
     const [taskName, setTaskName] = useState("");
     const [kwargsEndpoint, setKwargsEndpoint] = useState({
         requestEndpoint: "",
-    });
-    const [kwargsJob, setKwargsJob] = useState({
-        repoUrl: "",
-        repoName: "",
-        imageName: "",
-        command: ""
     });
     const [selectedRepo, setSelectedRepo] = useState(repoNames[0])
     const [imageName, setImageName] = useState("");

@@ -1,6 +1,5 @@
-import { Fragment, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { Check, Menu, Calendar } from 'react-feather'
+import { useState } from 'react'
+import {  Calendar } from 'react-feather'
 import Crontab from "../crontab/Crontab"
 import DropdownMenu from "../generic/DropdownMenu";
 
@@ -56,10 +55,6 @@ const crontabs = [
     value: '0 0 * * 1-5 '
   },
 ]
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
-}
 
 
 export default function CronDropdown() {

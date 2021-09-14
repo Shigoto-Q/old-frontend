@@ -1,6 +1,5 @@
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
-import Particles from "react-tsparticles";
 
 
 const Layout = (props: any) => {
