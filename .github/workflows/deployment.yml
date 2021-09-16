@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build the stack
-        run: docker build -f Dockerfile.prod .
+        run: docker build -f Dockerfile.prod -t shigoto_q_production_react .
       - name: Tag Docker images 
         run: | 
           docker tag shigoto_q_production_react ${{ secrets.DOCKERHUB_USERNAME }}/shigoto_q_production_react
