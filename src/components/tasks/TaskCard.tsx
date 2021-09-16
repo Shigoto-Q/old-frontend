@@ -61,9 +61,9 @@ function TaskCard({ label, total, Icon, data, cats, oldTotal }: TaskCardProps) {
     setOptions((options) => ({ ...options, xaxis: { categories: cats } }));
   }, [data, cats]);
   return (
-    <div className="flex flex-col bg-white shadow-lg rounded-sm  dark:text-gray-200 transition-colors duration-200 shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
+    <div className="bg-white shadow-lg rounded-sm  dark:text-gray-200 transition-colors duration-200 shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
       <div className="px-5 pt-5">
-        <header className="flex justify-between items-start"></header>
+        <header className="flex justify-between items-start"/>
         <h2 className="text-lg font-semibold text-gray-800 mb-2 dark:text-gray-200 transition-colors">
           {label}
         </h2>

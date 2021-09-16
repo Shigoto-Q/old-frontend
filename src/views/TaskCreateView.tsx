@@ -43,10 +43,9 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
         });
     }
     const userData = JSON.parse(localStorage.getItem("userData") || "{}")
-    const isGhConnected = (userData.github === null) ? false : !!(userData.github.token)
-    console.log(userData.github)
+    const isGhConnected = (userData?.github === null) ? false : !!(userData?.github.token)
     if(isGhConnected) {
-        repoNames = userData.github.repository_set.map((el:any, idx:any) => {
+        repoNames = userData?.github.repository_set.map((el:any, idx:any) => {
             return {
                 name:el.full_name,
                 value: el.repo_url,
@@ -90,9 +89,6 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
         }
     };
 
-
-
-
     const [selectedType, setSelectedType] = useState(taskTypes[0]);
     const [selectedCron, setSelectedCron] = useState(actualCrons[0]);
     const [atFirstStep, setAtFirstStep] = useState(true);
@@ -105,10 +101,6 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
     const [imageName, setImageName] = useState("");
     const [command, setCommand] = useState("");
     const [enabled, setEnabled] = useState(false)
-
-
-
-
 
     return (
         <div>

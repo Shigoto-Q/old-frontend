@@ -1,21 +1,13 @@
 import axios from 'axios'
 
-const baseURL = "http://shigoto.live"
+const baseURL = "http://localhost:8000"
 
 export const bareAPI = axios.create({
-    baseURL: "http://shigoto.live",
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-        'Origin': 'localhost:3000',
-    }
+    baseURL: "http://localhost:8000",
 })
 
 const api = axios.create({
     baseURL: baseURL,
-    headers: {
-        'Access-Control-Allow-Origin': '*'
-    }
 })
 
 

@@ -122,9 +122,10 @@ class Dashboard extends Component<TaskStatus, any> {
     render() {
         return (
             <div>
-                <div className="relative flex flex-col flex-1">
                     <main>
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="divide-opacity-10 divide-y-8 divide-purple-100 divide-solid">
+
+                        <div className="flex flex-col md:flex-row gap-4">
                             <TaskCard
                                 cats={this.state.time}
                                 label="Successful"
@@ -149,10 +150,11 @@ class Dashboard extends Component<TaskStatus, any> {
                                 data={this.state.pendingData}
                                 oldTotal={this.state.oldPending}
                             />
-                            <TaskTable />
                         </div>
+                        <TaskTable />
+                        </div>
+
                     </main>
-                </div>
             </div>
         );
     }
