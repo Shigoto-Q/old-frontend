@@ -9,7 +9,7 @@ const Footer = () => {
           to="/"
           className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
         >
-          <img src={logoIcon} alt="logo-icon" />
+          <img src={logoIcon} alt="logo-icon" width={50} height={50}/>
           <span className="ml-3 text-xl">Shigoto</span>
         </Link>
         <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">

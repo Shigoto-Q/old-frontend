@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-const baseURL = "http://194.195.247.179"
+const baseURL = "http://shigoto.live"
 
 export const bareAPI = axios.create({
-    baseURL: "http://194.195.247.179",
+    baseURL: "http://shigoto.live",
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
