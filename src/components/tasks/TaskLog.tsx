@@ -7,7 +7,7 @@ const TaskLog = () => {
     const [isSubscribed, setSubscribed] = useState(true)
     const token = localStorage.getItem("access")
     const handleWebsocket = () => {
-        const ws = new WebSocket(`ws://localhost:8080?token=${token}`)
+        const ws = new WebSocket(`ws://shigoto.live?token=${token}`)
         ws.onopen = () => {
             console.log('connected')
         }
