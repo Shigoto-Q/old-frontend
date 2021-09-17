@@ -4,16 +4,10 @@ const baseURL = "http://shigoto.live"
 
 export const bareAPI = axios.create({
     baseURL: "http://shigoto.live",
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-    }
 })
 
 const api = axios.create({
     baseURL: baseURL,
-    headers: {
-        'Access-Control-Allow-Origin': '*'
-    }
 })
 
 
