@@ -2,6 +2,7 @@ import { Component } from "react";
 import TaskTable from "../components/tasks/TasksTable";
 import TaskCard from "../components/tasks/TaskCard";
 import { CheckCircle, XCircle, Loader } from "react-feather";
+import {Slide, toast} from "react-toastify";
 
 
 const token = localStorage.getItem("access");
@@ -52,12 +53,22 @@ class Dashboard extends Component<TaskStatus, any> {
 
     componentWillMount() {
         this._isMounted = true;
-        const ws = new WebSocket(`ws://ws.shigoto.live/status?token=${token}`);
+        let ws = new WebSocket(`wss://ws.shigoto.live/status?token=${token}`);
 
-        this.ws.onopen = () => {
-            console.log("connected");
+        ws.onopen = () => {
+            toast("Fetching task statuses", {
+                position: "bottom-center",
+                transition: Slide,
+                hideProgressBar: false,
+                autoClose: 2000,
+                closeOnClick: true,
+                progress: undefined,
+                pauseOnHover: false,
+                pauseOnFocusLoss: false,
+                draggable: true,
+            });
         };
-        this.ws.onmessage = (message) => {
+        ws.onmessage = (message) => {
             if (this._isMounted) {
                 this.setState({ taskStatus: JSON.parse(message.data)[0] });
                 this.setState({
@@ -113,7 +124,7 @@ class Dashboard extends Component<TaskStatus, any> {
                 }
             }
         };
-        this.ws.onclose = () => {
+        ws.onclose = () => {
             this._isMounted = false;
             console.log("disconnected");
         };
