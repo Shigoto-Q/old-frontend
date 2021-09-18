@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logoIcon from "../assets/images/logo_icon.png";
+import logoIcon from "../assets/shigoto2/PNG/shigoto2-04.png";
 import { motion } from "framer-motion";
 
 const Navbar = () => {
@@ -7,10 +7,9 @@ const Navbar = () => {
     <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
       <Link
         to="/"
-        className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
+        className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900 -mb-2"
       >
-        <img src={logoIcon} alt="logo" width={50} height={50}/>{" "}
-        <span className="ml-3 text-xl text-gray-700">Shigoto</span>
+        <img src={logoIcon} alt="logo" width={120} height={50}/>{" "}
       </Link>
       <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
         <Link to="/pricing" className="mr-5 hover:text-gray-900">
@@ -19,9 +18,12 @@ const Navbar = () => {
         <Link to="/features" className="mr-5 hover:text-gray-900">
           Features
         </Link>
-        <Link to="/docs" className="mr-5 hover:text-gray-900">
-          Documentation
-        </Link>
+          <Link to="/contact" className="mr-5 hover:text-gray-900">
+              Contact us
+          </Link>
+          <Link to="/team" className="mr-5 hover:text-gray-900">
+              Our team
+          </Link>
       </nav>
       <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
         <Link

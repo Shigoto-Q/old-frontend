@@ -4,7 +4,7 @@ import DropdownMenu from "../components/generic/DropdownMenu";
 import {connect} from "react-redux";
 import {checkAuthenticated, load_user} from "../redux/actions/auth";
 import {createTask} from "../redux/actions/task";
-
+import { useHistory } from "react-router-dom";
 
 type TaskProps = {
     isAuthenticated: boolean;
@@ -14,17 +14,20 @@ type TaskProps = {
 
 
 const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
+    let history = useHistory();
     const taskTypes = [
         {
             id: 1,
             name: 'Custom endpoint request',
             value: 'custom_endpoint'
         },
-        {
-            id: 2,
-            name: 'Job',
-            value: 'k8s_job'
-        }
+        //TODO Disabled until feature flags is implemented
+        // {
+        //     id: 2,
+        //     name: 'Job',
+        //     value: 'k8s_job'
+        // }
+
     ]
     let actualCrons:any = []
     let repoNames:any = []
@@ -71,11 +74,11 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
 
 
     const handleSubmit = (event: any) => {
-        console.log(selectedType.value)
         event.preventDefault();
         switch (selectedType.id) {
             case 1:
                 createTask(taskName, selectedType.value, selectedCron.id, kwargsEndpoint, oneoff, enabled);
+                history.push("/dashboard/tasks");
                 break
             case 2:
                 const kwargsJob = {
@@ -84,8 +87,8 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
                     imageName: imageName,
                     command: command
                 }
-                console.log(selectedCron.id)
                 createTask(taskName, selectedType.value, selectedCron.id, kwargsJob, oneoff, enabled);
+                history.push("/dashboard/tasks");
         }
     };
 
@@ -109,7 +112,7 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
                 <div className="mt-10 w-2/4 self-center">
                     <label
                         htmlFor="latitude"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-white"
                     >
                         Task name
                     </label>
@@ -120,11 +123,14 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
                         autoComplete="taskname"
                         value = {taskName}
                         onChange = {event => handleTaskName(event)}
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500
+                        block w-full shadow-sm sm:text-sm border-gray-300 rounded-md
+                        dark:bg-gray-600 dark:border-gray-800 dark:text-gray-200
+                        "
                     />
                 </div>
                 <div className="flex flex-row justify-center align-center">
-                    <div className="w-2/4 mt-5 self-center">
+                    <div className="w-2/4 mt-5 self-center dark:text-white">
                         <DropdownMenu selected={selectedType} setSelected={setSelectedType} options={taskTypes} label={"Select your task type:"} />
                     </div>
                 </div>

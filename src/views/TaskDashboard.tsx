@@ -1,7 +1,6 @@
 import { Component } from "react";
 import TaskTable from "../components/tasks/TasksTable";
 import TaskCard from "../components/tasks/TaskCard";
-import { CheckCircle, XCircle, Loader } from "react-feather";
 import {Slide, toast} from "react-toastify";
 
 
@@ -136,15 +135,13 @@ class Dashboard extends Component<TaskStatus, any> {
     render() {
         return (
             <div>
+                <div className="divide-opacity-10 divide-y-8 divide-purple-100 divide-solid">
                     <main>
-                        <div className="divide-opacity-10 divide-y-8 divide-purple-100 divide-solid">
-
                         <div className="flex flex-col md:flex-row gap-4">
                             <TaskCard
                                 cats={this.state.time}
                                 label="Successful"
                                 total={this.state.taskStatus["Success"]}
-                                Icon={CheckCircle}
                                 data={this.state.successData}
                                 oldTotal={this.state.oldSuccess}
                             />
@@ -152,7 +149,6 @@ class Dashboard extends Component<TaskStatus, any> {
                                 cats={this.state.time}
                                 label="Failed"
                                 total={this.state.taskStatus["Failure"]}
-                                Icon={XCircle}
                                 data={this.state.failData}
                                 oldTotal={this.state.oldFail}
                             />
@@ -160,15 +156,14 @@ class Dashboard extends Component<TaskStatus, any> {
                                 cats={this.state.time}
                                 label="Pending"
                                 total={this.state.taskStatus["Pending"]}
-                                Icon={Loader}
                                 data={this.state.pendingData}
                                 oldTotal={this.state.oldPending}
                             />
                         </div>
-                        <TaskTable />
-                        </div>
-
                     </main>
+                    <TaskTable />
+
+                </div>
             </div>
         );
     }

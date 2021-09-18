@@ -23,9 +23,12 @@ const DropdownMenu = (props:DropdownMenuProps) => {
             <Listbox value={props?.selected} onChange={props?.setSelected}>
                 {({ open }) => (
                     <>
-                        <Listbox.Label className="block text-sm font-medium text-gray-700">{props.label} </Listbox.Label>
-                        <div className="mt-1 relative">
-                            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"><span className="flex items-center">
+                        <Listbox.Label className="block text-sm font-medium text-gray-700 dark:text-white ">{props.label} </Listbox.Label>
+                        <div className="mt-1 relative ">
+                            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md
+                            shadow-sm pl-3 pr-10 py-2 text-left cursor-default
+                            focus:outline-none focus:ring-1 focus:ring-indigo-500
+                            focus:border-indigo-500 sm:text-sm dark:bg-gray-600 dark:border-gray-800 dark:text-gray-200"><span className="flex items-center">
                                 {props.children}
                                 <span className="ml-3 block">{props.selected?.name? props.selected?.name : props.selected?.value}</span>
                             </span>
@@ -40,7 +43,9 @@ const DropdownMenu = (props:DropdownMenuProps) => {
                             >
                                 <Listbox.Options
                                     static
-                                    className="absolute mt-1 z-10 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                                    className="absolute mt-1 z-10 w-full bg-white shadow-lg max-h-56 rounded-md
+                                    py-1 text-base ring-1 ring-black ring-opacity-5
+                                    overflow-auto focus:outline-none sm:text-sm dark:bg-gray-600 dark:border-gray-800 dark:text-gray-200"
                                 >
                                     {props.options.map((option) => (
                                         <Listbox.Option
@@ -48,7 +53,7 @@ const DropdownMenu = (props:DropdownMenuProps) => {
                                             className={({ active }) =>
                                                 classNames(
                                                     active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                                                    'cursor-default select-none relative py-2 pl-3 pr-9'
+                                                    'cursor-default select-none relative py-2 pl-3 pr-9 dark:text-gray-200'
                                                 )
                                             }
                                             value={option}

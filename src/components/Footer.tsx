@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logoIcon from "../assets/images/logo_icon.png";
+import logoIcon from "../assets/shigoto2/PNG/shigoto2-04.png";
 
 const Footer = () => {
   return (
@@ -7,10 +7,9 @@ const Footer = () => {
       <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
         <Link
           to="/"
-          className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
+          className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900 -mb-4"
         >
-          <img src={logoIcon} alt="logo-icon" width={50} height={50}/>
-          <span className="ml-3 text-xl">Shigoto</span>
+          <img src={logoIcon} alt="logo-icon" width={120} height={50}/>
         </Link>
         <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
           © 2021 Shigoto —

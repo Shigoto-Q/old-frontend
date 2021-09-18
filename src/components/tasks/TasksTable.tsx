@@ -1,15 +1,18 @@
 import  api from "../../api/";
 import { useState, useEffect } from "react";
-import { CheckCircle, XCircle } from "react-feather";
+import { CheckCircle, XCircle, Edit2 } from "react-feather";
 import { Redirect } from "react-router-dom"
 import {deleteTask, runTask} from "../../redux/actions/task/"
 import { connect } from "react-redux"
 import { checkAuthenticated } from "../../redux/actions/auth/"
+
+
 type TaskProps = {
   isAuthenticated?: boolean,
   runTask: any,
   deleteTask: any
 }
+
 const TaskTable = ({ isAuthenticated, runTask, deleteTask }: TaskProps) => {
   const [tasks, setTasks] = useState<any[]>([]);
   const getUserTasks = () => {
@@ -18,16 +21,15 @@ const TaskTable = ({ isAuthenticated, runTask, deleteTask }: TaskProps) => {
       .then((res) => {
         setTasks(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
   const handleRun = (id: number, event: any) => {
     event.preventDefault()
     runTask(id)
   }
-
-  const handleDelete = (id:number, event:any) => {
+  const handleDelete = (id:number, event:any)  => {
     event.preventDefault()
-    deleteTask(id)
+    deleteTask(id).then(() => getUserTasks())
   }
   useEffect(() => {
     getUserTasks();
@@ -36,7 +38,7 @@ const TaskTable = ({ isAuthenticated, runTask, deleteTask }: TaskProps) => {
     return <Redirect to="/login" />
   }
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4">
+    <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden border-b border-gray-200 dark:border-gray-900">
@@ -77,14 +79,19 @@ const TaskTable = ({ isAuthenticated, runTask, deleteTask }: TaskProps) => {
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500  dark:text-gray-200 uppercase tracking-wider"
                   >
+                    Run
                   </th>
                   <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500  dark:text-gray-200 uppercase tracking-wider"
                   >
+                    Delete
                   </th>
-                  <th scope="col" className="relative px-6 py-3">
-                    <span className="sr-only">Edit</span>
+                  <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  dark:text-gray-200 uppercase tracking-wider"
+                  >
+                    Edit
                   </th>
                 </tr>
               </thead>
@@ -122,7 +129,6 @@ const TaskTable = ({ isAuthenticated, runTask, deleteTask }: TaskProps) => {
                           task.crontab.day_of_week
                           : task.interval}
                       </div>
-                      <div className="text-sm text-gray-500"></div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -138,7 +144,11 @@ const TaskTable = ({ isAuthenticated, runTask, deleteTask }: TaskProps) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-200">
                       <button
                         type="submit"
-                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-400 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm
+                        text-sm font-medium rounded-md text-white bg-purple-400 focus:outline-none
+                        focus:ring-2 focus:ring-offset-2 focus:ring-purple-500
+                        transition duration-500 ease-in-out hover:bg-green-400 transform hover:-translate-y-1 hover:scale-110
+                        "
                         onClick={(e) => handleRun(task.id, e)}
                       >
                         Run
@@ -147,11 +157,20 @@ const TaskTable = ({ isAuthenticated, runTask, deleteTask }: TaskProps) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-200">
                       <button
                           type="submit"
-                          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                          className="inline-flex justify-center py-2 px-4
+                          border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-400
+                          hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+                          transition duration-500 ease-in-out hover:bg-red-400 transform hover:-translate-y-1 hover:scale-110
+                          "
                           onClick={(e) => handleDelete(task.id, e)}
                       >
                         Delete
                       </button>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-200">
+                    <button>
+                      <Edit2/>
+                    </button>
                     </td>
                   </tr>
                 ))}

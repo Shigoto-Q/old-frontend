@@ -4,13 +4,12 @@ import { useState, useEffect } from "react";
 interface TaskCardProps {
   label: string;
   total: number;
-  Icon: any;
   data: any;
   cats: any;
   oldTotal: any;
 }
 
-function TaskCard({ label, total, Icon, data, cats, oldTotal }: TaskCardProps) {
+function TaskCard({ label, total, data, cats, oldTotal }: TaskCardProps) {
   const [options, setOptions] = useState({
     chart: {
       id: "realtime",
@@ -74,9 +73,6 @@ function TaskCard({ label, total, Icon, data, cats, oldTotal }: TaskCardProps) {
           <div className="text-3xl font-bold text-gray-800 mr-2 dark:text-gray-200 transition-colors">
             {total}
           </div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
-            +{oldTotal}%
-          </div>
         </div>
       </div>
       <div className="flex-grow">
@@ -84,7 +80,6 @@ function TaskCard({ label, total, Icon, data, cats, oldTotal }: TaskCardProps) {
           options={options}
           series={series}
           type="line"
-          width={389}
           height={155}
           className="-ml-8"
         />

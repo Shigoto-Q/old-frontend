@@ -32,6 +32,9 @@ const Routes = () => {
                                 <Route exact path='/login' component={lazy(() => import("../components/Login"))} />
                                 <Route exact path='/signup' component={lazy(() => import("../components/SignUp"))} />
                                 <Route exact path='/pricing' component={lazy(() => import("../views/PricingPage"))} />
+                                <Route exact path='/team' component={lazy(() => import("../views/TeamView"))} />
+                                <Route exact path='/contact' component={lazy(() => import("../views/ContactView"))} />
+
                             </Switch>
                         </Layout>
                     </Route>
