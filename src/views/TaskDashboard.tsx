@@ -26,7 +26,7 @@ function getDate() {
 
 class Dashboard extends Component<TaskStatus, any> {
     _isMounted = false;
-    ws = null;
+    ws = new WebSocket(`ws://ws.shigoto.live/status?token=${token}`);
     constructor(props: any) {
         super(props);
         this.state = {
