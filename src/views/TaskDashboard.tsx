@@ -26,7 +26,6 @@ function getDate() {
 
 class Dashboard extends Component<TaskStatus, any> {
     _isMounted = false;
-    ws = new WebSocket(`ws://ws.shigoto.live/status?token=${token}`);
     constructor(props: any) {
         super(props);
         this.state = {
@@ -53,7 +52,7 @@ class Dashboard extends Component<TaskStatus, any> {
 
     componentWillMount() {
         this._isMounted = true;
-        this.ws = new WebSocket(`ws://ws.shigoto.live/status?token=${token}`);
+        const ws = new WebSocket(`ws://ws.shigoto.live/status?token=${token}`);
 
         this.ws.onopen = () => {
             console.log("connected");
