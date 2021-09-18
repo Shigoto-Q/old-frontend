@@ -5,7 +5,6 @@ import { CheckCircle, XCircle, Loader } from "react-feather";
 
 
 const token = localStorage.getItem("access");
-const ws = new WebSocket(`ws://ws.shigoto.live/status?token=${token}`);
 
 
 type TaskStatus = {
@@ -27,6 +26,7 @@ function getDate() {
 
 class Dashboard extends Component<TaskStatus, any> {
     _isMounted = false;
+    ws = null;
     constructor(props: any) {
         super(props);
         this.state = {
@@ -53,10 +53,12 @@ class Dashboard extends Component<TaskStatus, any> {
 
     componentWillMount() {
         this._isMounted = true;
-        ws.onopen = () => {
+        this.ws = new WebSocket(`ws://ws.shigoto.live/status?token=${token}`);
+
+        this.ws.onopen = () => {
             console.log("connected");
         };
-        ws.onmessage = (message) => {
+        this.ws.onmessage = (message) => {
             if (this._isMounted) {
                 this.setState({ taskStatus: JSON.parse(message.data)[0] });
                 this.setState({
@@ -112,7 +114,7 @@ class Dashboard extends Component<TaskStatus, any> {
                 }
             }
         };
-        ws.onclose = () => {
+        this.ws.onclose = () => {
             this._isMounted = false;
             console.log("disconnected");
         };
