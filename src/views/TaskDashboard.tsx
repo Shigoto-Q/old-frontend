@@ -5,7 +5,7 @@ import { CheckCircle, XCircle, Loader } from "react-feather";
 
 
 const token = localStorage.getItem("access");
-const ws = new WebSocket(`ws://ws.shigoto.live/ws/status?token=${token}`);
+const ws = new WebSocket(`ws://ws.shigoto.live/status?token=${token}`);
 
 
 type TaskStatus = {
