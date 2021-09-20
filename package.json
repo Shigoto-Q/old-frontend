@@ -7,6 +7,7 @@
     "@headlessui/react": "^1.0.0",
     "@heroicons/react": "^1.0.1",
     "@material-ui/core": "^4.11.3",
+    "@reduxjs/toolkit": "^1.6.1",
     "@stripe/react-stripe-js": "^1.4.0",
     "@stripe/stripe-js": "^1.13.2",
     "@tailwindcss/forms": "^0.3.2",
@@ -37,7 +38,9 @@
     "react-use-caret-position": "^1.0.2",
     "redux-debounced": "^0.5.0",
     "redux-thunk": "^2.3.0",
+    "remote-redux-devtools": "^0.5.16",
     "rsuite": "^4.10.3",
+    "save-dev": "0.0.1-security",
     "styled-components": "^5.3.1",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
