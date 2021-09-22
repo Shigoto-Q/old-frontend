@@ -50,6 +50,9 @@ class ResultView extends Component<any, any> {
     
   }
   parseJson() {
+    if(this.state.data.status === 'FAILURE') {
+      return {error: this.state.data.exception};
+    }
     try {
       return JSON.parse(this.state.data?.result?.replace(/'/g, '"'))
     }
