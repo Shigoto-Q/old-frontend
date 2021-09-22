@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
 import api from "../../../api/";
-import {TASK_CREATION_FAILED, TASK_CREATION_SUCCESS, TASK_DELETE_SUCCESS, TASK_RAN_SUCCESS} from "../../types/task/";
+import {TASK_CREATION_FAILED, TASK_CREATION_SUCCESS, TASK_DELETE_SUCCESS, TASK_LIST_GET_SUCCESS, TASK_RAN_SUCCESS} from "../../types/task/";
+
+
 
 type Kwargs = {
   requestEndpoint: string;
@@ -8,6 +10,14 @@ type Kwargs = {
   repoName: string,
   imageName: string;
   command: string;
+}
+
+export const getTaskList = () => async (dispatch: Dispatch) => {
+  const res = await api.get('/api/v1/task/')
+  dispatch({
+    type: TASK_LIST_GET_SUCCESS,
+    payload: res.data
+  });
 }
 
 export const createTask = (
@@ -52,8 +62,6 @@ export const createTask = (
     enabled: enabled,
   };
 
-  console.log(kw)
-
 
   await api
     .post("/api/v1/task/", body, config)
@@ -84,10 +92,10 @@ export const runTask = (taskId: number) => async (dispatch: Dispatch) => {
 
 export const deleteTask = (taskId: number) => async (dispatch: Dispatch) => {
   await api.delete(`/api/v1/task/${taskId}/delete/`)
-      .then(res => {
+      .then(_ => {
         dispatch({
           type: TASK_DELETE_SUCCESS,
-          payload: res.data
+          payload: taskId
         })
       })
 }

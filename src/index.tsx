@@ -5,7 +5,7 @@ import Spinner from "./components/Spinner"
 import reportWebVitals from './reportWebVitals';
 import 'react-toastify/dist/ReactToastify.css'
 import {ToastContainer} from "react-toastify"
-import { store } from "./redux/storeConfig/store"
+import  { store }  from "./redux/storeConfig/store"
 import { Provider } from 'react-redux'
 
 const LazyApp = lazy(() => import('./App'))

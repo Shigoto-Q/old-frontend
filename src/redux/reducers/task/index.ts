@@ -1,14 +1,21 @@
 import { toast, Slide } from "react-toastify";
-import {TASK_CREATION_FAILED, TASK_CREATION_SUCCESS, TASK_DELETE_SUCCESS, TASK_RAN_SUCCESS} from "../../types/task"
+import { idText } from "typescript";
+import {TASK_CREATION_FAILED, TASK_CREATION_SUCCESS, TASK_DELETE_SUCCESS, TASK_LIST_GET_SUCCESS, TASK_RAN_SUCCESS} from "../../types/task"
 
 const initialState = {
-  task: null
+  tasks: [] as any[]
 };
 
 const reducers = (state = initialState, action: any) => {
   const { type, payload } = action;
 
   switch (type) {
+    case TASK_LIST_GET_SUCCESS:
+      return {
+        ...state,
+        tasks: payload
+      }
+
     case TASK_CREATION_FAILED:
       return {
         ...state,
@@ -46,7 +53,6 @@ const reducers = (state = initialState, action: any) => {
         ...state,
       };
     case TASK_DELETE_SUCCESS:
-      console.log(state)
       toast("Task deleted successfully!", {
         position: "bottom-center",
         transition: Slide,
@@ -58,9 +64,10 @@ const reducers = (state = initialState, action: any) => {
         pauseOnFocusLoss: false,
         draggable: true,
       });
+      console.log(payload)
       return {
         ...state,
-        crontab: payload,
+        tasks: state.tasks.filter(task => task.id != payload)
       };
     default:
       return state;
