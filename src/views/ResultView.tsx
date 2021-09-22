@@ -3,6 +3,8 @@ import { withRouter } from "react-router";
 import  api  from "../api"
 import ReactJson from 'react-json-view'
 
+const MAX_PREVIEW_LENGTH = 300;
+
 
 class ResultView extends Component<any, any> {
   constructor(props: any) {
@@ -23,7 +25,7 @@ class ResultView extends Component<any, any> {
       .catch(err => { })
   }
   downloadFile = () => {
-    const myData = JSON.parse(this.state.data.result.replace(/'/g, '"'))
+    const myData = this.parseJson()
     const fileName = this.state.data.task_id
     const json = JSON.stringify(myData);
     const blob = new Blob([json], { type: 'application/json' });
@@ -35,6 +37,21 @@ class ResultView extends Component<any, any> {
     link.click();
     document.body.removeChild(link);
   }
+
+
+  trimString(){
+    const previewText = this.state.data.result;
+    return previewText.length > MAX_PREVIEW_LENGTH ? previewText.substring(0, MAX_PREVIEW_LENGTH - 3) + "..." : previewText;
+  }
+  parseJson() {
+    try {
+      return JSON.parse(this.state.data?.result?.replace(/'/g, '"'))
+    }
+    catch {
+      return {error : "Data is not valid JSON", preview: this.trimString()}
+    }
+  }
+
   render() {
     if (this.state.loading) {
       return (
@@ -51,7 +68,7 @@ class ResultView extends Component<any, any> {
           </div>
           <div className="flex flex-col bg-white shadow-lg rounded-sm border border-gray-200">
             <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-400 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-200" onClick={this.downloadFile}>Download result</button>
-            <ReactJson collapsed={true} src={JSON.parse(this.state.data?.result?.replace(/'/g, '"'))} />
+            <ReactJson collapsed={true} src={this.parseJson()} validationMessage="Data returned is not valid JSON data." displayDataTypes={false} />
           </div>
         </main>
       </div>
