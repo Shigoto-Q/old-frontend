@@ -162,7 +162,6 @@ class Dashboard extends Component<TaskStatus, any> {
                         </div>
                     </main>
                     <TaskTable />
-
                 </div>
             </div>
         );

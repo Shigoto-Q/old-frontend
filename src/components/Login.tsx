@@ -2,23 +2,27 @@ import { useState } from 'react'
 import { Link } from "react-router-dom"
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { login } from "../redux/actions/auth/"
+import { load_user, login } from "../redux/actions/auth/"
 import logoIcon from "../assets/shigoto2/PNG/shigoto2-04.png";
 
 
 type LoginProps = {
   login: any,
-  isAuthenticated: any
+  load_user: any,
+  isAuthenticated: any,
+  user: any
 }
 
-const Login = ({ login, isAuthenticated }: LoginProps) => {
+const Login = ({ login, load_user, isAuthenticated, user }: LoginProps) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  if (isAuthenticated)
+  if (isAuthenticated && user)
     return <Redirect to="/dashboard/tasks" />
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    login(username, password)
+    login(username, password).then(() => {
+      load_user()
+    })
   }
   return (
     <div className="flex items-center justify-center">
@@ -84,6 +88,7 @@ const Login = ({ login, isAuthenticated }: LoginProps) => {
 const mapStateToProps = (state: any) => ({
   isAuthenticated: state.auth.isAuthenticated,
   loginFail: state.auth.loginFail,
+  user: state.auth.user
 })
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, load_user })(Login);
