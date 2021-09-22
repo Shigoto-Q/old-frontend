@@ -40,8 +40,14 @@ class ResultView extends Component<any, any> {
 
 
   trimString(){
+    console.log(this.state.data)
     const previewText = this.state.data.result;
-    return previewText.length > MAX_PREVIEW_LENGTH ? previewText.substring(0, MAX_PREVIEW_LENGTH - 3) + "..." : previewText;
+    if(previewText) {
+      return previewText.length > MAX_PREVIEW_LENGTH ? previewText.substring(0, MAX_PREVIEW_LENGTH - 3) + "..." : previewText;
+    } else {
+      return "No preview available."
+    }
+    
   }
   parseJson() {
     try {
