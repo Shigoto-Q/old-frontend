@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = "https://shigoto.live"
+const baseURL = "https://api.shigoto.live"
 
 export const bareAPI = axios.create({
     baseURL: baseURL,
