@@ -52,7 +52,7 @@ class Dashboard extends Component<TaskStatus, any> {
 
     componentWillMount() {
         this._isMounted = true;
-        let ws = new WebSocket(`wss://ws.shigoto.live/status?token=${token}`);
+        let ws = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/status?token=${token}`);
 
         ws.onopen = () => {
             toast("Fetching task statuses", {
