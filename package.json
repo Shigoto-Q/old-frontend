@@ -23,6 +23,7 @@
     "axios": "^0.21.1",
     "chart.js": "^3.3.2",
     "cron-validator": "^1.2.1",
+    "dotenv": "^10.0.0",
     "eventsource": "^1.1.0",
     "framer-motion": "^4.1.9",
     "react": "^17.0.2",

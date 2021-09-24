@@ -7,7 +7,7 @@ const TaskLog = () => {
     const [isSubscribed, setSubscribed] = useState(true)
     const token = localStorage.getItem("access")
     const handleWebsocket = () => {
-        const ws = new WebSocket(`wss://ws.shigoto.live/results?token=${token}`)
+        const ws = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/results?token=${token}`)
         ws.onopen = () => {
             console.log('connected')
         }
