@@ -121,6 +121,9 @@ class Dashboard extends Component<TaskStatus, any> {
                 if (this.state.failData.length > 5) {
                     this.state.failData.shift(1);
                 }
+                if (this.state.pendingData.length > 5) {
+                    this.state.pendingData.shift(1);
+                }
             }
         };
         ws.onclose = () => {
