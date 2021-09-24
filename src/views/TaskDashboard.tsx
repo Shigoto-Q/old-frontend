@@ -52,7 +52,7 @@ class Dashboard extends Component<TaskStatus, any> {
 
     componentWillMount() {
         this._isMounted = true;
-        let ws = new WebSocket(`wss://ws.shigoto.live/status?token=${token}`);
+        let ws = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/status?token=${token}`);
 
         ws.onopen = () => {
             toast("Fetching task statuses", {
@@ -113,13 +113,16 @@ class Dashboard extends Component<TaskStatus, any> {
                     time: [...this.state.time, getDate()],
                 });
                 if (this.state.time.length > 5) {
-                    this.state.time.shift();
+                    this.state.time.shift(1);
                 }
                 if (this.state.successData.length > 5) {
-                    this.state.successData.shift();
+                    this.state.successData.shift(1);
                 }
                 if (this.state.failData.length > 5) {
-                    this.state.failData.shift();
+                    this.state.failData.shift(1);
+                }
+                if (this.state.pendingData.length > 5) {
+                    this.state.pendingData.shift(1);
                 }
             }
         };
