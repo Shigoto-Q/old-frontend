@@ -53,6 +53,10 @@ const TaskEdit = ({handleClose, user, selectedTask, updateTask}: any) => {
 
 
   const handleTaskName = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setKwargsEndpoint({
+          ...kwargsEndpoint,
+          taskName: e.target.value
+      })
       setTaskName(e.target.value)
   }
 
@@ -66,6 +70,8 @@ const TaskEdit = ({handleClose, user, selectedTask, updateTask}: any) => {
   const [taskName, setTaskName] = useState(selectedTask.name);
   const [kwargsEndpoint, setKwargsEndpoint] = useState({
       requestEndpoint: JSON.parse(selectedTask.kwargs).request_endpoint,
+      user: JSON.parse(selectedTask.kwargs).user,
+      taskName: JSON.parse(selectedTask.kwargs).task_name
   });
   const [enabled, setEnabled] = useState(selectedTask.enabled)
   const [expireSeconds, setExpireSeconds] = useState(selectedTask.expire_seconds)
