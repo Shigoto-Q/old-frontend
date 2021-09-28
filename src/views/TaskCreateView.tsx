@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {checkAuthenticated, load_user} from "../redux/actions/auth";
 import {createTask} from "../redux/actions/task";
 import { useHistory } from "react-router-dom";
+import formatCron from '../helpers/formatCron';
 
 type TaskProps = {
     isAuthenticated: boolean;
@@ -34,15 +35,7 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
     const userCrons = JSON.parse(user || "{}").crontab;
     if(userCrons) {
         actualCrons = userCrons.map((item: any) => {
-            return {
-                value: [
-                    item.minute,
-                    item.hour,
-                    item.day_of_month,
-                    item.month_of_year,
-                ].join(" "),
-                id: item.id,
-            };
+            return formatCron(item);
         });
     }
     const userData = JSON.parse(localStorage.getItem("userData") || "{}")

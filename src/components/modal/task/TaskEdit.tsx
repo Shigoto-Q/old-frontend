@@ -2,6 +2,7 @@ import {Switch} from '@headlessui/react'
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import formatCron from '../../../helpers/formatCron';
+import snakifyKeys from '../../../helpers/snakify';
 import { checkAuthenticated, load_user } from '../../../redux/actions/auth';
 import { createTask, updateTask } from '../../../redux/actions/task';
 import DropdownMenu from "../../generic/DropdownMenu";
@@ -30,15 +31,7 @@ const TaskEdit = ({handleClose, user, selectedTask, updateTask}: any) => {
   const userCrons = JSON.parse(user || "{}").crontab;
   if(userCrons) {
       actualCrons = userCrons.map((item: any) => {
-          return {
-              value: [
-                  item.minute,
-                  item.hour,
-                  item.day_of_month,
-                  item.month_of_year,
-              ].join(" "),
-              id: item.id,
-          };
+          return formatCron(item)
       });
   }
   const userData = JSON.parse(localStorage.getItem("userData") || "{}")
@@ -54,7 +47,7 @@ const TaskEdit = ({handleClose, user, selectedTask, updateTask}: any) => {
   }
 
   const handleSubmit = () => {
-      updateTask(selectedTask.id, taskName, selectedCron.id, kwargsEndpoint, oneoff, enabled)
+      updateTask(selectedTask.id, taskName, selectedCron.id, snakifyKeys(kwargsEndpoint), oneoff, enabled)
   }
 
 
