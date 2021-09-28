@@ -3,8 +3,8 @@ type Crontab = {
     minute: string
     hour: string, 
     day_of_month: string,
-    month: string,
     month_of_year: string,
+    day_of_week: string,
 }
 
 type DropdownElement = {
