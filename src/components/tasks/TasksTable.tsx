@@ -2,20 +2,37 @@ import  api from "../../api/";
 import { useState, useEffect } from "react";
 import { CheckCircle, XCircle, Edit2 } from "react-feather";
 import { Redirect } from "react-router-dom"
-import {deleteTask, getTaskList, runTask} from "../../redux/actions/task/"
+import {closeModal, deleteTask, getTaskList, openModal, runTask} from "../../redux/actions/task/"
 import { connect } from "react-redux"
 import { checkAuthenticated } from "../../redux/actions/auth/"
+import TaskEdit from "../modal/task/TaskEdit";
 
 
 type TaskProps = {
   isAuthenticated?: boolean,
-  tasks: any
+  tasks: any,
+  modalActive: boolean,
   getTaskList: any,
   runTask: any,
   deleteTask: any,
+  openModal: any,
+  closeModal: any
 }
 
-const TaskTable = ({ isAuthenticated, tasks, getTaskList, runTask, deleteTask }: TaskProps) => {
+
+const TaskTable = ({ isAuthenticated, tasks, modalActive, getTaskList, runTask, deleteTask, openModal, closeModal }: TaskProps) => {
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [selectedTask, setSelectedTask] = useState(undefined)
+
+
+  const handleClose = () => {
+    closeModal()
+  }
+
+  const handleEditClick = (task: any) => {
+    setSelectedTask(task)
+    openModal()
+  }
 
   const handleRun = (id: number, event: any) => {
     event.preventDefault()
@@ -34,6 +51,7 @@ const TaskTable = ({ isAuthenticated, tasks, getTaskList, runTask, deleteTask }:
   }
   return (
     <div className="flex flex-col">
+      {modalActive && <TaskEdit handleClose={handleClose} selectedTask={selectedTask}></TaskEdit>}
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden border-b border-gray-200 dark:border-gray-900">
@@ -163,7 +181,7 @@ const TaskTable = ({ isAuthenticated, tasks, getTaskList, runTask, deleteTask }:
                       </button>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-200">
-                    <button>
+                    <button onClick={() => handleEditClick(task)}>
                       <Edit2/>
                     </button>
                     </td>
@@ -180,7 +198,8 @@ const TaskTable = ({ isAuthenticated, tasks, getTaskList, runTask, deleteTask }:
 
 const mapStateToProps = (state: any) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  tasks: state.task.tasks
+  tasks: state.task.tasks,
+  modalActive: state.task.modalActive
 })
 
-export default connect(mapStateToProps, { checkAuthenticated, getTaskList, runTask, deleteTask })(TaskTable);
+export default connect(mapStateToProps, { checkAuthenticated, getTaskList, runTask, deleteTask, openModal, closeModal })(TaskTable);

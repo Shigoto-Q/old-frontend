@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import api from "../../../api/";
-import {TASK_CREATION_FAILED, TASK_CREATION_SUCCESS, TASK_DELETE_SUCCESS, TASK_LIST_GET_SUCCESS, TASK_RAN_SUCCESS} from "../../types/task/";
+import {TASK_CREATION_FAILED, TASK_CREATION_SUCCESS, TASK_DELETE_SUCCESS, TASK_LIST_GET_SUCCESS, TASK_RAN_SUCCESS, TASK_UPDATE_SUCCESS, TASK_UPDATE_FAILURE, TASK_EDIT_OPEN_MODAL, TASK_EDIT_CLOSE_MODAL} from "../../types/task/";
 
 
 
@@ -26,7 +26,8 @@ export const createTask = (
   crontab: number,
   kwargs: Kwargs,
   oneoff: boolean,
-  enabled: boolean
+  enabled: boolean,
+  expireSeconds: number
 ) => async (dispatch: Dispatch) => {
   const config = {
     headers: {
@@ -60,6 +61,7 @@ export const createTask = (
     kwargs: JSON.stringify(kw),
     one_off: oneoff,
     enabled: enabled,
+    expire_seconds: expireSeconds
   };
 
 
@@ -90,12 +92,67 @@ export const runTask = (taskId: number) => async (dispatch: Dispatch) => {
     })
 }
 
+// Add update for k8s_job when enabled
+export const updateTask = (
+  taskId: number,
+  taskName: string,
+  crontab: number,
+  kwargs: Kwargs,
+  oneoff: boolean,
+  enabled: boolean
+) => async (dispatch: Dispatch, getState: any) => {
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = {
+    name: taskName,
+    crontab: crontab,
+    args: '',
+    kwargs: JSON.stringify(kwargs),
+    one_off: oneoff,
+    enabled: enabled,
+  };
+
+  await api.put(`/api/v1/task/${taskId}/update/`, body, config)
+    .then(res => {
+      console.log(getState().schedule.crontab)
+      dispatch({
+        type: TASK_UPDATE_SUCCESS,
+        payload: {
+          data: res.data,
+          crontab: getState().schedule.crontab.filter((crontab: Crontab) => crontab.id === res.data.crontab)[0]
+        }
+      })
+    }).catch(err => {
+      dispatch({
+        type: TASK_UPDATE_FAILURE,
+        payload: err.response
+      })
+    })
+}
+
 export const deleteTask = (taskId: number) => async (dispatch: Dispatch) => {
   await api.delete(`/api/v1/task/${taskId}/delete/`)
       .then(_ => {
         dispatch({
           type: TASK_DELETE_SUCCESS,
-          payload: taskId
+          payload: taskId,
         })
       })
+}
+
+export const openModal: any = () => (dispatch: Dispatch) => {
+  dispatch({
+    type: TASK_EDIT_OPEN_MODAL,
+  });
+}
+
+export const closeModal: any = () => (dispatch: Dispatch) => {
+  dispatch({
+    type: TASK_EDIT_CLOSE_MODAL,
+  });
 }
