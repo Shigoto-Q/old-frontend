@@ -15,7 +15,7 @@ type TaskProps = {
 
 const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
     let history = useHistory();
-    const taskTypes = [
+    const taskTypes: DropdownElement[] = [
         {
             id: 1,
             name: 'Custom endpoint request',
@@ -77,7 +77,7 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
         event.preventDefault();
         switch (selectedType.id) {
             case 1:
-                createTask(taskName, selectedType.value, selectedCron.id, kwargsEndpoint, oneoff, enabled);
+                createTask(taskName, selectedType.value, selectedCron.id, kwargsEndpoint, oneoff, enabled, expireSeconds);
                 history.push("/dashboard/tasks");
                 break
             case 2:
@@ -87,7 +87,7 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
                     imageName: imageName,
                     command: command
                 }
-                createTask(taskName, selectedType.value, selectedCron.id, kwargsJob, oneoff, enabled);
+                createTask(taskName, selectedType.value, selectedCron.id, kwargsJob, oneoff, enabled, expireSeconds);
                 history.push("/dashboard/tasks");
         }
     };
@@ -104,6 +104,7 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
     const [imageName, setImageName] = useState("");
     const [command, setCommand] = useState("");
     const [enabled, setEnabled] = useState(false)
+    const [expireSeconds, setExpireSeconds] = useState(120)
 
     return (
         <div>
@@ -233,6 +234,8 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
                         id="exp"
                         placeholder="100"
                         className="mt-1 mb-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  dark:bg-gray-800 border-gray-700 rounded-md"
+                        value = {expireSeconds}
+                        onChange = {(e) => setExpireSeconds(parseInt(e.target.value))}
                     />
                 </div>
 

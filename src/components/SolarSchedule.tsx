@@ -7,7 +7,7 @@ import DropdownMenu from "./generic/DropdownMenu";
 type SolarProps = {
   createSolar: any;
 };
-const solar = [
+const solar: DropdownElement[] = [
   {
     id: 1,
     name: "Astronomical dawn",

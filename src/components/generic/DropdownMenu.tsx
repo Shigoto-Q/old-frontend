@@ -3,9 +3,9 @@ import { Check, Menu} from "react-feather";
 import React, {Fragment} from "react";
 
 type DropdownMenuProps = {
-    selected: { id:number, name: any, value: string },
-    setSelected:  React.Dispatch<React.SetStateAction<{id: number, name:any, value: string}>>,
-    options: Array<{ id:number,name:any, value:string }>
+    selected: { id:number, name?: any, value: string },
+    setSelected:  React.Dispatch<React.SetStateAction<{id: number, name?:any, value: string}>>,
+    options: Array<{ id:number,name?:any, value:string }>
     label?: string
     children?: any
 }

@@ -3,7 +3,7 @@ import {  Calendar } from 'react-feather'
 import Crontab from "../crontab/Crontab"
 import DropdownMenu from "../generic/DropdownMenu";
 
-const crontabs = [
+const crontabs: DropdownElement[] = [
   {
     id: 1,
     name: 'At minute 10',
