@@ -87,7 +87,7 @@ const reducers = (state = initialState, action: any) => {
         }
         return {
           ...state,
-          tasks: [...state.tasks.filter(task => task.id !== payload.data.id), updatedTask],
+          tasks: [...state.tasks.filter(task => task.id !== payload.data.id), updatedTask].sort((x, y) => x.id - y.id),
           modalActive: false
         }
       case TASK_UPDATE_FAILURE:

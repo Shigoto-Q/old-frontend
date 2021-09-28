@@ -6,6 +6,7 @@ import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Check, Menu, } from "react-feather";
 import SpinnerComponent from "../Spinner";
+import formatCron from "../../helpers/formatCron";
 
 type TaskProps = {
   isAuthenticated: boolean;
@@ -26,15 +27,7 @@ const CreateTask = ({ isAuthenticated, user, createTask }: TaskProps) => {
   let actualCrons:any = []
   if(userCrons) {
       actualCrons = userCrons.map((item: any) => {
-      return {
-        value: [
-          item.minute,
-          item.hour,
-          item.day_of_month,
-          item.month_of_year,
-        ].join(" "),
-        id: item.id,
-      };
+      return formatCron(item);
     });
   }
 
