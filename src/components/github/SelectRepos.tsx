@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Checkbox, CheckboxGroup, Button, Modal, ButtonToolbar } from "rsuite";
 import api from "../../api/";
-import "rsuite/dist/styles/rsuite-default.css";
+
 
 interface RepoProps {
   optionsProps: any;
