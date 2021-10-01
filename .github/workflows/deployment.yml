@@ -31,6 +31,7 @@ jobs:
       - name: Tag Docker images 
         run: | 
           docker tag shigoto_q_production_react ${{ secrets.DOCKERHUB_USERNAME }}/shigoto_q_production_react:${{ steps.vars.outputs.sha_short }}
+          docker tag shigoto_q_production_react ${{ secrets.DOCKERHUB_USERNAME }}/shigoto_q_production_react:latest
 
       - name: Push Docker images 
         run: |
