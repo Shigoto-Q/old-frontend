@@ -1,32 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from "react-router-dom"
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { checkAuthenticated, load_user, login } from "../redux/actions/auth/"
+import { load_user, login } from "../redux/actions/auth/"
 import logoIcon from "../assets/shigoto2/PNG/shigoto2-04.png";
-import Spinner from './Spinner'
 
 
 type LoginProps = {
   login: any,
   load_user: any,
   isAuthenticated: any,
-  checkAuthenticated: any,
-  checkedAuth: any,
   user: any
 }
 
-const Login = ({ login, load_user, isAuthenticated, checkAuthenticated, checkedAuth, user }: LoginProps) => {
+const Login = ({ login, load_user, isAuthenticated, user }: LoginProps) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
-  useEffect(() => {
-    checkAuthenticated()
-  }, [])
-
-
-
-  if (checkedAuth && isAuthenticated && user)
+  if (isAuthenticated && user)
     return <Redirect to="/dashboard/tasks" />
   const handleSubmit = (e: any) => {
     e.preventDefault()
@@ -97,8 +87,8 @@ const Login = ({ login, load_user, isAuthenticated, checkAuthenticated, checkedA
 
 const mapStateToProps = (state: any) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  checkedAuth: state.auth.checkedAuth,
+  loginFail: state.auth.loginFail,
   user: state.auth.user
 })
 
-export default connect(mapStateToProps, { login, load_user, checkAuthenticated })(Login);
+export default connect(mapStateToProps, { login, load_user })(Login);
