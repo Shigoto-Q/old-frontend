@@ -17,6 +17,7 @@ const initialState = {
   refresh: localStorage.getItem("refresh"),
   isAuthenticated: !!isUserAuth,
   user: isUserAuth,
+  checkedAuth: false
 };
 
 const reducers = (state = initialState, action: any) => {
@@ -27,6 +28,7 @@ const reducers = (state = initialState, action: any) => {
       return {
         ...state,
         isAuthenticated: true,
+        checkedAuth: true
       };
     case LOGIN_SUCCESS:
       localStorage.setItem("access", payload.access);
@@ -46,6 +48,7 @@ const reducers = (state = initialState, action: any) => {
         isAuthenticated: true,
         access: payload.access,
         refresh: payload.refresh,
+        checkedAuth: true
       };
     case USER_LOADED_SUCCESS:
       localStorage.setItem("userData", JSON.stringify(payload));
@@ -68,11 +71,13 @@ const reducers = (state = initialState, action: any) => {
       return {
         ...state,
         isAuthenticated: false,
+        checkedAuth: true
       };
     case AUTHENTICATED_FAIL:
       return {
         ...state,
         isAuthenticated: false,
+        checkedAuth: true
       };
     case USER_LOADED_FAIL:
       return {
@@ -98,7 +103,7 @@ const reducers = (state = initialState, action: any) => {
       });
       return {
         ...state,
-        loginFail: true,
+        checkedAuth: true,
       };
     case LOGOUT:
       localStorage.removeItem("access")
