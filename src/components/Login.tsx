@@ -36,7 +36,7 @@ const Login = ({ login, load_user, isAuthenticated, checkAuthenticated, checkedA
   }
   return (
     <div>
-      {(checkedAuth && !isAuthenticated) ? <div className="flex items-center justify-center">
+      {(checkedAuth && !isAuthenticated) && <div className="flex items-center justify-center">
     <div className="max-w-md w-full space-y-8">
       <div>
         <img src={logoIcon} alt="logo"/>
@@ -92,8 +92,8 @@ const Login = ({ login, load_user, isAuthenticated, checkAuthenticated, checkedA
         </div>
       </form>
     </div>
-  </div> : <Spinner />}
-    </div>
+  </div>}
+  </div>
   )
 }
 
