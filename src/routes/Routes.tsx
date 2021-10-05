@@ -5,7 +5,7 @@ import Home from "../views/HomePage"
 import { AnimatePresence } from 'framer-motion'
 import { lazy } from "react"
 
-const isUserLoggedIn = () => localStorage.getItem('userData')
+const isUserLoggedIn = () => localStorage.getItem('isAuthenticated')
 
 const Routes = () => {
     return (
