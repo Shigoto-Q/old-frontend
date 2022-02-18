@@ -1,11 +1,12 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Switch} from '@headlessui/react'
 import DropdownMenu from "../components/generic/DropdownMenu";
 import {connect} from "react-redux";
 import {checkAuthenticated, load_user} from "../redux/actions/auth";
 import {createTask} from "../redux/actions/task";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import formatCron from '../helpers/formatCron';
+import api from "../api";
 
 type TaskProps = {
     isAuthenticated: boolean;
@@ -16,20 +17,16 @@ type TaskProps = {
 
 const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
     let history = useHistory();
-    const taskTypes: DropdownElement[] = [
-        {
-            id: 1,
-            name: 'Custom endpoint request',
-            value: 'custom_endpoint'
-        },
-        //TODO Disabled until feature flags is implemented
-        // {
-        //     id: 2,
-        //     name: 'Job',
-        //     value: 'k8s_job'
-        // }
-
-    ]
+    const [taskTypes, setTaskTypes] = useState([{id: 0, name: '', value: ''}])
+    const fetchTaskTypes = ()  => {
+        api.get(`/api/v1/task/types/`)
+            .then((resp: any) => {
+                setTaskTypes(resp.data)
+            })
+    }
+    useEffect(() => {
+       fetchTaskTypes()
+    }, [])
     let actualCrons:any = []
     let repoNames:any = []
     const userCrons = JSON.parse(user || "{}").crontab;
@@ -70,8 +67,7 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
         event.preventDefault();
         switch (selectedType.id) {
             case 1:
-                createTask(taskName, selectedType.value, selectedCron.id, kwargsEndpoint, oneoff, enabled, expireSeconds);
-                history.push("/dashboard/tasks");
+                createTask(taskName, selectedType?.value, selectedCron?.id, kwargsEndpoint, oneoff, enabled, expireSeconds)
                 break
             case 2:
                 const kwargsJob = {
@@ -84,8 +80,8 @@ const TaskCreate = ({isAuthenticated, user, createTask} : TaskProps) => {
                 history.push("/dashboard/tasks");
         }
     };
-
-    const [selectedType, setSelectedType] = useState(taskTypes[0]);
+    const [first]: any = taskTypes;
+    const [selectedType, setSelectedType] = useState(first);
     const [selectedCron, setSelectedCron] = useState(actualCrons[0]);
     const [atFirstStep, setAtFirstStep] = useState(true);
     const [oneoff, setOneoff] = useState(false);

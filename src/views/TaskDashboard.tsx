@@ -2,6 +2,7 @@ import { Component } from "react";
 import TaskTable from "../components/tasks/TasksTable";
 import TaskCard from "../components/tasks/TaskCard";
 import {Slide, toast} from "react-toastify";
+import { taskTypes, taskWsActions } from "../constants/wsChannels";
 
 
 const token = localStorage.getItem("access");
@@ -52,9 +53,15 @@ class Dashboard extends Component<TaskStatus, any> {
 
     componentWillMount() {
         this._isMounted = true;
-        let ws = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/status?token=${token}`);
+        let ws = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}`)
 
+        const resultSubscribe = {
+            action: taskWsActions.SUBSCRIBE,
+            token: token,
+            topic: taskTypes.taskCount
+        }
         ws.onopen = () => {
+            ws.send(JSON.stringify(resultSubscribe))
             toast("Fetching task statuses", {
                 position: "bottom-center",
                 transition: Slide,
@@ -68,18 +75,19 @@ class Dashboard extends Component<TaskStatus, any> {
             });
         };
         ws.onmessage = (message) => {
+            let msg = JSON.parse(message.data)
             if (this._isMounted) {
-                this.setState({ taskStatus: JSON.parse(message.data)[0] });
+                this.setState({ taskStatus: msg });
                 this.setState({
                     successData: [
                         ...this.state.successData,
-                        JSON.parse(message.data)[0]["Success"],
+                        msg["success"],
                     ],
                 });
                 var frstLast = this.state.successData[
                     this.state.successData.length - 1
                 ];
-                var scnLast = this.state.successData[this.state.successData.length - 2];
+                const scnLast = this.state.successData[this.state.successData.length - 2];
 
                 this.setState({
                     oldSuccess: (frstLast - scnLast) / 100,
@@ -88,7 +96,7 @@ class Dashboard extends Component<TaskStatus, any> {
                 this.setState({
                     failData: [
                         ...this.state.failData,
-                        JSON.parse(message.data)[0]["Failure"],
+                        msg["failure"],
                     ],
                 });
                 var fLast = this.state.failData[this.state.failData.length - 1];
@@ -100,7 +108,7 @@ class Dashboard extends Component<TaskStatus, any> {
                 this.setState({
                     pendingData: [
                         ...this.state.pendingData,
-                        JSON.parse(message.data)[0]["Pending"],
+                        msg["pending"],
                     ],
                 });
                 var pLast = this.state.pendingData[this.state.pendingData.length - 1];
@@ -128,7 +136,12 @@ class Dashboard extends Component<TaskStatus, any> {
         };
         ws.onclose = () => {
             this._isMounted = false;
-            console.log("disconnected");
+            const unsubscribeMessage = {
+                action: taskWsActions.UNSUBSCRIBE,
+                token: token,
+                topic: taskTypes.taskCount
+            }
+            ws.send(JSON.stringify(unsubscribeMessage));
         };
     }
     componentWillUnmount() {
@@ -144,21 +157,21 @@ class Dashboard extends Component<TaskStatus, any> {
                             <TaskCard
                                 cats={this.state.time}
                                 label="Successful"
-                                total={this.state.taskStatus["Success"]}
+                                total={this.state.taskStatus["success"]}
                                 data={this.state.successData}
                                 oldTotal={this.state.oldSuccess}
                             />
                             <TaskCard
                                 cats={this.state.time}
                                 label="Failed"
-                                total={this.state.taskStatus["Failure"]}
+                                total={this.state.taskStatus["failure"]}
                                 data={this.state.failData}
                                 oldTotal={this.state.oldFail}
                             />
                             <TaskCard
                                 cats={this.state.time}
                                 label="Pending"
-                                total={this.state.taskStatus["Pending"]}
+                                total={this.state.taskStatus["pending"]}
                                 data={this.state.pendingData}
                                 oldTotal={this.state.oldPending}
                             />

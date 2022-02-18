@@ -33,7 +33,7 @@ class Dashboard extends Component {
                                     <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
                                         EMAIL
                                     </h2>
-                                    <a className="text-indigo-500 leading-relaxed">support@shigo.to</a>
+                                    <a href={"#/"} className="text-indigo-500 leading-relaxed">support@shigo.to</a>
                                     <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">
                                         PHONE
                                     </h2>

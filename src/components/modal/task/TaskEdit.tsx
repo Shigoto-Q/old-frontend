@@ -37,6 +37,7 @@ const TaskEdit = ({handleClose, user, selectedTask, updateTask}: any) => {
   const userData = JSON.parse(localStorage.getItem("userData") || "{}")
   const isGhConnected = (userData?.github === null) ? false : !!(userData?.github.token)
   if(isGhConnected) {
+      // eslint-disable-next-line
       repoNames = userData?.github.repository_set.map((el:any, idx:any) => {
           return {
               name:el.full_name,

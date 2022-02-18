@@ -1,66 +1,72 @@
 import { useEffect, useState } from "react"
 import DataTable from 'react-data-table-component'
 import { Link } from "react-router-dom"
+import { taskTypes, taskWsActions } from '../../constants/wsChannels'
 
 const TaskLog = () => {
     const [tasks, setTasks] = useState<any[]>([])
-    const [isSubscribed, setSubscribed] = useState(true)
     const token = localStorage.getItem("access")
     const handleWebsocket = () => {
-        const ws = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/results?token=${token}`)
-        ws.onopen = () => {
-            console.log('connected')
+        const ws = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}`)
+        const resultSubscribe = {
+            action: taskWsActions.SUBSCRIBE,
+            token: token,
+            topic: taskTypes.taskResults,
+        }
+        ws.onopen = (event) => {
+            ws.send(JSON.stringify(resultSubscribe))
         }
         ws.onmessage = (message) => {
-            setTasks(JSON.parse(message.data))
-
+            let parsedMessage = JSON.parse(message.data)
+            setTasks(prevState => [...prevState, parsedMessage])
         }
-
-        ws.onclose = () => {
+        ws.onerror = (error) => {
+            console.log(error)
+        }
+        ws.onclose = (event) => {
+            console.log(event)
             console.log('disconnected')
-            setSubscribed(false)
         }
     }
 
     useEffect(() => {
-        if (isSubscribed)
-            handleWebsocket()
+        handleWebsocket()
         // eslint-disable-next-line
     }, ['a'])
 
     const columns = [
         {
             name: 'Task ID',
-            selector: 'Task_id',
+            selector: 'task_id',
             sortable: true,
-            cell: (row: any) => <Link className="text-blue-800" to={`${row.Task_id}/result`}>{row.Task_id}</Link>
+            cell: (row: any) => <Link className="text-blue-800" to={`${row.task_id}/result`}>{row.task_id}</Link>
         },
         {
             name: 'Task name',
-            selector: 'Task_name',
+            selector: 'task_name',
             sortable: true,
         },
         {
             name: 'Status',
-            selector: 'Status',
+            selector: 'status',
             sortable: true,
             width: "150px",
-            cell: (row: any) => <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${(row.Status === 'SUCCESS') ? ('green') : ((row.Status === 'FAILURE') ? 'red' : 'yellow')}-100 text-black-800`}>{row.Status}</span >
+            cell: (row: any) => <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${(row.status === 'SUCCESS') ? ('green') : ((row.status === 'FAILURE') ? 'red' : 'yellow')}-100 text-black-800`}>{row.status}</span >
         },
         {
             name: 'Date done',
-            selector: 'Date_done',
+            selector: 'date_done',
 
             sortable: true,
         },
         {
             name: 'Date created',
-            selector: 'Date_created',
+            selector: 'date_created',
             sortable: true,
         },
         {
             name: 'Created by',
-            selector: 'User_id',
+            selector: 'user',
             sortable: true,
         },
     ];

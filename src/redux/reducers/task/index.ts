@@ -1,5 +1,4 @@
 import { toast, Slide } from "react-toastify";
-import { idText } from "typescript";
 import {TASK_CREATION_FAILED, TASK_CREATION_SUCCESS, TASK_DELETE_SUCCESS, TASK_EDIT_CLOSE_MODAL, TASK_EDIT_OPEN_MODAL, TASK_LIST_GET_SUCCESS, TASK_RAN_SUCCESS, TASK_UPDATE_FAILURE, TASK_UPDATE_SUCCESS} from "../../types/task"
 
 const initialState = {
@@ -18,11 +17,22 @@ const reducers = (state = initialState, action: any) => {
       }
 
     case TASK_CREATION_FAILED:
+      console.log(payload)
+      toast("Task creation failed!", {
+        position: "bottom-center",
+        transition: Slide,
+        hideProgressBar: false,
+        autoClose: 2000,
+        closeOnClick: true,
+        progress: undefined,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+        draggable: true,
+      });
       return {
         ...state,
       };
     case TASK_CREATION_SUCCESS:
-      console.log(state)
       toast("Task created successfully!", {
         position: "bottom-center",
         transition: Slide,
@@ -67,7 +77,7 @@ const reducers = (state = initialState, action: any) => {
       });
       return {
         ...state,
-        tasks: state.tasks.filter(task => task.id != payload)
+        tasks: state.tasks.filter(task => task.id !== payload)
       };
       case TASK_UPDATE_SUCCESS:
         toast("Task updated successfully!", {

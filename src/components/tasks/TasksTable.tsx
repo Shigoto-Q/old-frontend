@@ -1,4 +1,3 @@
-import  api from "../../api/";
 import { useState, useEffect } from "react";
 import { CheckCircle, XCircle, Edit2 } from "react-feather";
 import { Redirect } from "react-router-dom"
@@ -21,7 +20,6 @@ type TaskProps = {
 
 
 const TaskTable = ({ isAuthenticated, tasks, modalActive, getTaskList, runTask, deleteTask, openModal, closeModal }: TaskProps) => {
-  const [showEditModal, setShowEditModal] = useState(false)
   const [selectedTask, setSelectedTask] = useState(undefined)
 
 
@@ -45,6 +43,7 @@ const TaskTable = ({ isAuthenticated, tasks, modalActive, getTaskList, runTask, 
   useEffect(() => {
     getTaskList()
     //getUserTasks();
+    // eslint-disable-next-line
   }, []);
   if (!isAuthenticated) {
     return <Redirect to="/login" />
@@ -181,9 +180,17 @@ const TaskTable = ({ isAuthenticated, tasks, modalActive, getTaskList, runTask, 
                       </button>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-200">
-                    <button onClick={() => handleEditClick(task)}>
-                      <Edit2/>
-                    </button>
+                      <button
+                          type="submit"
+                          className="inline-flex justify-center py-2 px-4
+                          border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-400
+                          hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+                          transition duration-500 ease-in-out hover:bg-yellow-500 transform hover:-translate-y-1 hover:scale-110
+                          "
+                          onClick={(e) => handleEditClick(task)}
+                      >
+                        Edit
+                      </button>
                     </td>
                   </tr>
                 ))}
