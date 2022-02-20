@@ -34,7 +34,7 @@ const Routes = () => {
                                 <Route exact path='/pricing' component={lazy(() => import("../views/PricingPage"))} />
                                 <Route exact path='/team' component={lazy(() => import("../views/TeamView"))} />
                                 <Route exact path='/contact' component={lazy(() => import("../views/ContactView"))} />
-
+                                <Route exact path ='/features' component={lazy(() => import("../views/FeaturesPage"))} />
                             </Switch>
                         </Layout>
                     </Route>

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import DataTable from 'react-data-table-component'
 import { Link } from "react-router-dom"
 import { taskTypes, taskWsActions } from '../../constants/wsChannels'
+import { statusMapping, statusColorMapping } from "../../constants/taskConstants";
+
 
 const TaskLog = () => {
     const [tasks, setTasks] = useState<any[]>([])
@@ -51,7 +53,10 @@ const TaskLog = () => {
             selector: 'status',
             sortable: true,
             width: "150px",
-            cell: (row: any) => <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${(row.status === 'SUCCESS') ? ('green') : ((row.status === 'FAILURE') ? 'red' : 'yellow')}-100 text-black-800`}>{row.status}</span >
+            cell: (row: any) =>
+                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColorMapping[row.status]} text-black-800`}>
+                {statusMapping[row.status]}
+                </span >
         },
         {
             name: 'Date done',
